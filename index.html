@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Santa's Snowy Search - Magical Edition</title>
     <!-- Google Fonts for the Old-Timey Christmas Look -->
     <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #aedef4; }
+        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #aedef4; touch-action: none; }
         canvas { display: block; }
         
         #header-bar {
@@ -20,24 +20,26 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            padding: 20px 30px;
+            padding: 15px 20px;
             pointer-events: none;
             z-index: 10;
         }
 
         #title-area h1 {
             text-shadow: 2px 2px 15px rgba(255,255,255,0.5), 0 0 20px rgba(212, 36, 38, 0.4);
+            font-size: clamp(1.5rem, 5vw, 3rem);
         }
 
         #instructions-box {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 12px 20px;
-            border-radius: 16px;
+            padding: 8px 12px;
+            border-radius: 12px;
             color: #1a365d;
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             pointer-events: auto;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
         }
 
         #bag-display {
@@ -45,39 +47,41 @@
             bottom: 20px;
             right: 20px;
             background: linear-gradient(135deg, #d42426 0%, #8b0000 100%);
-            padding: 20px 30px;
-            border-radius: 24px;
-            border: 4px solid #ffd700;
+            padding: 15px 20px;
+            border-radius: 20px;
+            border: 3px solid #ffd700;
             color: white;
             text-align: center;
             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             z-index: 10;
+            min-width: 120px;
         }
 
         .score-box {
-            margin-top: 8px;
+            margin-top: 4px;
             background: rgba(0,0,0,0.2);
-            padding: 4px 12px;
-            border-radius: 12px;
+            padding: 2px 8px;
+            border-radius: 8px;
             font-weight: 900;
         }
 
         .message {
             position: fixed;
-            bottom: 40px;
-            left: 40px;
-            padding: 20px 40px;
+            bottom: 30px;
+            left: 20px;
+            padding: 15px 25px;
             background: rgba(255, 255, 255, 0.95);
             color: #d42426;
-            border-radius: 16px;
+            border-radius: 12px;
             font-weight: 800;
-            font-size: 24px;
+            font-size: 18px;
             display: none;
             z-index: 100;
             box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-            border: 3px solid #d42426;
+            border: 2px solid #d42426;
             text-align: left;
             backdrop-filter: blur(8px);
+            max-width: 80%;
         }
 
         #crosshair {
@@ -130,25 +134,26 @@
             position: relative;
             text-align: center;
             color: #b91c1c; 
-            padding: 60px;
+            padding: 40px;
+            width: 90%;
         }
 
         #final-text {
             font-family: 'Berkshire Swash', cursive;
-            font-size: 8rem;
-            line-height: 1;
+            font-size: clamp(3rem, 15vw, 7rem);
+            line-height: 1.1;
             text-shadow: 2px 2px 0px #fff, 4px 4px 15px rgba(0,0,0,0.1);
         }
 
         .holly {
             position: absolute;
-            width: 120px;
-            height: 120px;
+            width: clamp(60px, 15vw, 120px);
+            height: clamp(60px, 15vw, 120px);
         }
-        .holly-tl { top: -20px; left: -20px; transform: rotate(-15deg); }
-        .holly-tr { top: -20px; right: -20px; transform: rotate(75deg); }
-        .holly-bl { bottom: -20px; left: -20px; transform: rotate(-105deg); }
-        .holly-br { bottom: -20px; right: -20px; transform: rotate(165deg); }
+        .holly-tl { top: -10px; left: -10px; transform: rotate(-15deg); }
+        .holly-tr { top: -10px; right: -10px; transform: rotate(75deg); }
+        .holly-bl { bottom: -10px; left: -10px; transform: rotate(-105deg); }
+        .holly-br { bottom: -10px; right: -10px; transform: rotate(165deg); }
     </style>
 </head>
 <body>
@@ -167,12 +172,12 @@
 
 <div id="header-bar">
     <div id="title-area">
-        <h1 class="text-5xl font-black italic text-red-600">🎅 Sunny Sleigh Ride</h1>
+        <h1 class="font-black italic text-red-600">🎅 Sunny Sleigh Ride</h1>
     </div>
     <div id="instructions-box">
-        <div class="flex flex-col gap-1 text-sm font-bold">
-            <p>👀 <span class="text-red-700">LOOK:</span> Move Mouse</p>
-            <p>🎯 <span class="text-red-700">COLLECT:</span> Click Gifts</p>
+        <div class="flex flex-col gap-1 font-bold">
+            <p>👀 <span class="text-red-700">LOOK:</span> Drag/Mouse</p>
+            <p>🎯 <span class="text-red-700">COLLECT:</span> Lift/Click</p>
             <p>⚠️ <span class="text-gray-700">AVOID:</span> Coal & Mess</p>
         </div>
     </div>
@@ -181,11 +186,11 @@
 <div id="crosshair"></div>
 
 <div id="bag-display">
-    <div class="text-5xl mb-1">🎁</div>
-    <div class="font-black text-lg tracking-wider uppercase">Santa's Sack</div>
+    <div class="text-4xl mb-1">🎁</div>
+    <div class="font-black text-sm tracking-wider uppercase">Santa's Sack</div>
     <div class="score-box">
-        <span id="score" class="text-3xl text-yellow-300">0</span>
-        <span class="text-xl opacity-60">/ 5</span>
+        <span id="score" class="text-2xl text-yellow-300">0</span>
+        <span class="text-lg opacity-60">/ 5</span>
     </div>
 </div>
 
@@ -206,6 +211,10 @@ let autoTargetPos = new THREE.Vector3(0, 15, 80);
 let currentSleighSpeed = 15;
 let nextPathUpdate = 0;
 
+// Mobile specific state
+let lastTouchX = 0;
+let lastTouchY = 0;
+
 // Final Animation 
 let finalSleighGroup = null;
 let isFinalAnimationActive = false;
@@ -222,38 +231,51 @@ function initAudio() {
 }
 
 function playBellSound() {
-    initAudio();
+    initAudio(); if (audioCtx.state === 'suspended') audioCtx.resume();
     const now = audioCtx.currentTime;
     [2000, 2500, 3200, 4000].forEach((freq, i) => {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now);
+        osc.type = 'sine'; osc.frequency.setValueAtTime(freq, now);
         gain.gain.setValueAtTime(0.1 / (i + 1), now);
         gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.5);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        osc.connect(gain); gain.connect(audioCtx.destination);
         osc.start(); osc.stop(now + 1.5);
     });
 }
 
+function playVictoryJingle() {
+    initAudio(); if (audioCtx.state === 'suspended') audioCtx.resume();
+    const now = audioCtx.currentTime;
+    const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+    notes.forEach((freq, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + i * 0.1);
+        gain.gain.setValueAtTime(0, now + i * 0.1);
+        gain.gain.linearRampToValueAtTime(0.15, now + i * 0.1 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.1 + 0.5);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(now + i * 0.1); osc.stop(now + i * 0.1 + 0.6);
+    });
+}
+
 function playSwoopSound() {
-    initAudio();
+    initAudio(); if (audioCtx.state === 'suspended') audioCtx.resume();
     const now = audioCtx.currentTime;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(100, now);
+    osc.type = 'triangle'; osc.frequency.setValueAtTime(100, now);
     osc.frequency.exponentialRampToValueAtTime(800, now + 0.6);
-    gain.gain.setValueAtTime(0, now);
-    gain.gain.linearRampToValueAtTime(0.1, now + 0.1);
+    gain.gain.setValueAtTime(0, now); gain.gain.linearRampToValueAtTime(0.1, now + 0.1);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
     osc.connect(gain); gain.connect(audioCtx.destination);
     osc.start(); osc.stop(now + 0.6);
 }
 
 function playSplatSound() {
-    initAudio();
+    initAudio(); if (audioCtx.state === 'suspended') audioCtx.resume();
     const now = audioCtx.currentTime;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -265,7 +287,7 @@ function playSplatSound() {
 }
 
 function playMissSound() {
-    initAudio();
+    initAudio(); if (audioCtx.state === 'suspended') audioCtx.resume();
     const now = audioCtx.currentTime;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -277,7 +299,7 @@ function playMissSound() {
 }
 
 function playMagicalJollySound(volume = 1.0) {
-    initAudio();
+    initAudio(); if (audioCtx.state === 'suspended') audioCtx.resume();
     const now = audioCtx.currentTime;
     const masterGain = audioCtx.createGain();
     masterGain.gain.value = volume;
@@ -286,8 +308,7 @@ function playMagicalJollySound(volume = 1.0) {
         const start = now + (i * 0.4);
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(110 - (i*10), start);
+        osc.type = 'square'; osc.frequency.setValueAtTime(110 - (i*10), start);
         osc.frequency.exponentialRampToValueAtTime(60, start + 0.25);
         gain.gain.setValueAtTime(0, start);
         gain.gain.linearRampToValueAtTime(0.12, start + 0.05);
@@ -349,12 +370,9 @@ function createProceduralTextures() {
 function createSantaSleigh() {
     const group = new THREE.Group();
     const bodyMat = new THREE.MeshStandardMaterial({ color: 0x880000, roughness: 0.6, metalness: 0.2 });
-    const bodyBase = new THREE.Mesh(new THREE.BoxGeometry(12, 3, 20), bodyMat);
-    bodyBase.position.y = 4; group.add(bodyBase);
-    const bodyBack = new THREE.Mesh(new THREE.BoxGeometry(12, 6, 2), bodyMat);
-    bodyBack.position.set(0, 5.5, -9); group.add(bodyBack);
-    const bodyFront = new THREE.Mesh(new THREE.BoxGeometry(12, 4, 2), bodyMat);
-    bodyFront.position.set(0, 4.5, 9); bodyFront.rotation.x = Math.PI / 6; group.add(bodyFront);
+    const bodyBase = new THREE.Mesh(new THREE.BoxGeometry(12, 3, 20), bodyMat); bodyBase.position.y = 4; group.add(bodyBase);
+    const bodyBack = new THREE.Mesh(new THREE.BoxGeometry(12, 6, 2), bodyMat); bodyBack.position.set(0, 5.5, -9); group.add(bodyBack);
+    const bodyFront = new THREE.Mesh(new THREE.BoxGeometry(12, 4, 2), bodyMat); bodyFront.position.set(0, 4.5, 9); bodyFront.rotation.x = Math.PI / 6; group.add(bodyFront);
     const runnerMat = new THREE.MeshStandardMaterial({ color: 0xcccccc, metalness: 0.8, roughness: 0.2 });
     const runnerCurve = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 2, 12), new THREE.Vector3(0, 0.5, 8), new THREE.Vector3(0, 0.5, -8), new THREE.Vector3(0, 2, -12)]);
     const runnerGeo = new THREE.TubeGeometry(runnerCurve, 20, 0.5, 8, false);
@@ -372,8 +390,7 @@ function createSantaSleigh() {
             const deer = new THREE.Group();
             deer.add(new THREE.Mesh(new THREE.BoxGeometry(3, 4, 6), deerMat));
             const h = new THREE.Mesh(new THREE.BoxGeometry(2.5, 2.5, 4), deerMat); h.position.set(0, 2, 4); deer.add(h);
-            deer.position.set(j === 0 ? -5 : 5, 4, -(25 + i * 12));
-            group.add(deer);
+            deer.position.set(j === 0 ? -5 : 5, 4, -(25 + i * 12)); group.add(deer);
         }
     }
     group.traverse(child => { if (child.isMesh) { child.castShadow = true; child.receiveShadow = true; } });
@@ -405,8 +422,22 @@ function init() {
     const snowPoints = new THREE.Points(snowGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.8, transparent: true, opacity: 0.95 }));
     scene.add(snowPoints); scene.snow = snowPoints;
     createWorld();
-    document.addEventListener('mousemove', onMouseMove); document.addEventListener('mousedown', onMouseClick); window.addEventListener('resize', onWindowResize);
+    
+    // Listeners
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('touchstart', onTouchStart, { passive: false });
+    document.addEventListener('touchmove', onTouchMove, { passive: false });
+    document.addEventListener('touchend', onTouchEnd, { passive: false });
+    window.addEventListener('resize', onWindowResize);
+    
     showMessage("Sleigh Pilot Online! Collect 5 gifts! ☀️", 4000);
+}
+
+function createWorld() {
+    for (let i = 0; i < 200; i++) createTree(Math.random()*1200-600, Math.random()*1200-600);
+    for (let i = 0; i < 35; i++) createHouse(Math.random()*1000-500, Math.random()*1000-500);
+    for (let i = 0; i < 150; i++) createItem(Math.random()*1100-550, Math.random()*1100-550, i < 75);
 }
 
 function createTree(x, z) {
@@ -445,27 +476,43 @@ function createItem(x, z, isGood) {
     group.position.set(x, 2, z); scene.add(group); items.push(group);
 }
 
-function createWorld() {
-    for (let i = 0; i < 200; i++) createTree(Math.random()*1200-600, Math.random()*1200-600);
-    for (let i = 0; i < 35; i++) createHouse(Math.random()*1000-500, Math.random()*1000-500);
-    for (let i = 0; i < 150; i++) createItem(Math.random()*1100-550, Math.random()*1100-550, i < 75);
+// --- INTERACTION LOGIC ---
+function performSelection() {
+    // STOP COLLECTION ONCE TARGET IS REACHED
+    if (gameOver || isFinalAnimationActive || score >= TOTAL_GOOD_TARGET) return;
+
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(new THREE.Vector2(0,0), camera);
+    const intersects = raycaster.intersectObjects(hitboxes);
+
+    if (intersects.length > 0) {
+        const item = intersects[0].object.userData.parentItem;
+        if (item.userData.collected) return;
+        if (item.userData.isGood) {
+            item.userData.collected = true; score++; document.getElementById('score').innerText = score;
+            
+            // Check for victory state
+            if (score >= TOTAL_GOOD_TARGET) {
+                playVictoryJingle();
+                setTimeout(startSantaDeparture, 1500);
+            } else {
+                playBellSound();
+                showMessage("Found one! 🎁", 1200);
+            }
+
+            const halo = new THREE.Mesh(new THREE.TorusGeometry(5, 0.35, 16, 64), new THREE.MeshBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.9 }));
+            halo.rotation.x = Math.PI/2; item.add(halo); item.userData.halo = halo;
+            item.userData.animating = true; item.userData.startTime = Date.now(); item.userData.startPos = item.position.clone();
+        } else {
+            playSplatSound(); showMessage("Yuck! That's not a gift! 💩", 1500); camera.position.x += (Math.random()-0.5) * 3;
+        }
+    } else playMissSound();
 }
 
-function startSantaDeparture() {
-    isFinalAnimationActive = true;
-    finalAnimationStartTime = Date.now();
-    flightDirection.copy(camera.getWorldDirection(new THREE.Vector3())).normalize();
-    finalSleighGroup = createSantaSleigh();
-    finalSleighGroup.scale.set(0.1, 0.1, 0.1);
-    const startPoint = new THREE.Vector3(0.7, -0.7, 0.3); startPoint.unproject(camera);
-    finalSleighGroup.position.copy(startPoint);
-    scene.add(finalSleighGroup);
-    const sleighLight = new THREE.PointLight(0xffd700, 50, 1000, 1.5);
-    sleighLight.castShadow = true;
-    finalSleighGroup.add(sleighLight); finalSleighGroup.userData.light = sleighLight;
-    const haloGeo = new THREE.TorusGeometry(18, 2, 32, 128);
-    const haloMat = new THREE.MeshBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.9 });
-    const halo1 = new THREE.Mesh(haloGeo, haloMat); halo1.rotation.x = Math.PI/2; finalSleighGroup.add(halo1); finalSleighGroup.userData.halo1 = halo1;
+function onMouseDown(e) {
+    if (document.pointerLockElement !== renderer.domElement && !('ontouchstart' in window)) {
+        renderer.domElement.requestPointerLock();
+    } else { performSelection(); }
 }
 
 function onMouseMove(e) {
@@ -477,29 +524,23 @@ function onMouseMove(e) {
     }
 }
 
-function onMouseClick() {
-    if (gameOver) return;
-    if (document.pointerLockElement !== renderer.domElement) { renderer.domElement.requestPointerLock(); return; }
-    if (isFinalAnimationActive) return;
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(new THREE.Vector2(0,0), camera);
-    const intersects = raycaster.intersectObjects(hitboxes);
-    if (intersects.length > 0) {
-        const item = intersects[0].object.userData.parentItem;
-        if (item.userData.collected) return;
-        if (item.userData.isGood) {
-            item.userData.collected = true; score++; document.getElementById('score').innerText = score;
-            playBellSound();
-            const halo = new THREE.Mesh(new THREE.TorusGeometry(5, 0.35, 16, 64), new THREE.MeshBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.9 }));
-            halo.rotation.x = Math.PI/2; item.add(halo); item.userData.halo = halo;
-            item.userData.animating = true; item.userData.startTime = Date.now(); item.userData.startPos = item.position.clone();
-            if (score >= TOTAL_GOOD_TARGET) setTimeout(startSantaDeparture, 1500);
-            else showMessage("Found one! 🎁", 1200);
-        } else {
-            playSplatSound(); showMessage("Yuck! That's not a gift! 💩", 1500); camera.position.x += (Math.random()-0.5) * 3;
-        }
-    } else playMissSound();
+function onTouchStart(e) {
+    initAudio(); if (audioCtx.state === 'suspended') audioCtx.resume();
+    lastTouchX = e.touches[0].pageX; lastTouchY = e.touches[0].pageY;
 }
+
+function onTouchMove(e) {
+    if (gameOver) return;
+    e.preventDefault();
+    const touchX = e.touches[0].pageX; const touchY = e.touches[0].pageY;
+    const deltaX = touchX - lastTouchX; const deltaY = touchY - lastTouchY;
+    yaw -= deltaX * 0.005; pitch -= deltaY * 0.005;
+    pitch = Math.max(-Math.PI/2.4, Math.min(Math.PI/2.4, pitch));
+    camera.rotation.set(pitch, yaw, 0, 'YXZ');
+    lastTouchX = touchX; lastTouchY = touchY;
+}
+
+function onTouchEnd(e) { performSelection(); }
 
 function showMessage(txt, duration = 3000) {
     const box = document.getElementById('msg-box'); box.innerText = txt; box.style.display = 'block';
@@ -524,6 +565,23 @@ function createMagicDust(pos) {
     tick();
 }
 
+function startSantaDeparture() {
+    isFinalAnimationActive = true;
+    finalAnimationStartTime = Date.now();
+    flightDirection.copy(camera.getWorldDirection(new THREE.Vector3())).normalize();
+    finalSleighGroup = createSantaSleigh();
+    finalSleighGroup.scale.set(0.1, 0.1, 0.1);
+    const startPoint = new THREE.Vector3(0.7, -0.7, 0.4); startPoint.unproject(camera);
+    finalSleighGroup.position.copy(startPoint);
+    scene.add(finalSleighGroup);
+    const sleighLight = new THREE.PointLight(0xffd700, 50, 1000, 1.5);
+    sleighLight.castShadow = true;
+    finalSleighGroup.add(sleighLight); finalSleighGroup.userData.light = sleighLight;
+    const haloGeo = new THREE.TorusGeometry(18, 2, 32, 128);
+    const haloMat = new THREE.MeshBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.9 });
+    const halo1 = new THREE.Mesh(haloGeo, haloMat); halo1.rotation.x = Math.PI/2; finalSleighGroup.add(halo1); finalSleighGroup.userData.halo1 = halo1;
+}
+
 function animate() {
     if (gameOver) return;
     requestAnimationFrame(animate);
@@ -539,8 +597,7 @@ function animate() {
         camera.position.addScaledVector(new THREE.Vector3().subVectors(autoTargetPos, camera.position).normalize(), currentSleighSpeed * delta);
     } else {
         const elapsed = now - finalAnimationStartTime;
-        const duration = 28000; 
-        const t = Math.min(elapsed / duration, 1.0);
+        const duration = 28000; const t = Math.min(elapsed / duration, 1.0);
         if (finalSleighGroup) {
             let pos = new THREE.Vector3(); let look = new THREE.Vector3();
             const forward = flightDirection.clone();
@@ -551,17 +608,13 @@ function animate() {
                 const mid = camera.position.clone().addScaledVector(forward, 30).addScaledVector(new THREE.Vector3(0,-1,0), 6);
                 pos.lerpVectors(start, mid, subT); look.copy(camera.position);
                 finalSleighGroup.scale.setScalar(THREE.MathUtils.lerp(0.1, 1.2, subT));
-            } 
-            else if (t < 0.35) {
+            } else if (t < 0.35) {
                 const subT = (t - 0.15) / 0.2;
                 pos.copy(camera.position).addScaledVector(forward, 30).addScaledVector(new THREE.Vector3(0,-1,0), 6 + Math.sin(now*0.002)*2);
                 look.copy(camera.position);
                 if (finalSleighGroup.userData.arm) finalSleighGroup.userData.arm.rotation.z = Math.sin(now * 0.015) * 1.5;
-                if (now - lastHoTime > 1800) { 
-                    lastHoTime = now; showMessage("🎅 HO HO HO! HAPPY HOLIDAYS!", 1500); playMagicalJollySound(1.0); 
-                }
-            }
-            else if (t < 0.85) {
+                if (now - lastHoTime > 1800) { lastHoTime = now; showMessage("🎅 HO HO HO! HAPPY HOLIDAYS!", 1500); playMagicalJollySound(1.0); }
+            } else if (t < 0.85) {
                 const subT = (t - 0.35) / 0.5;
                 const dist = subT * 1000;
                 const curveHeight = Math.sin(subT * Math.PI) * 150;
@@ -569,28 +622,16 @@ function animate() {
                 pos.copy(camera.position).addScaledVector(forward, 30 + dist).addScaledVector(new THREE.Vector3(0,1,0), curveHeight).addScaledVector(right, spiralRadius);
                 look.copy(pos).add(forward).addScaledVector(new THREE.Vector3(0,1,0), 20);
                 if (finalSleighGroup.userData.arm) finalSleighGroup.userData.arm.rotation.z *= 0.95;
-                if (now - lastHoTime > 2500 && subT < 0.8) {
-                    lastHoTime = now; playMagicalJollySound(Math.max(0.1, 1.0 - subT * 1.2));
-                }
+                if (now - lastHoTime > 2500 && subT < 0.8) { lastHoTime = now; playMagicalJollySound(Math.max(0.1, 1.0 - subT * 1.2)); }
                 snowIntensity = 0.3 + subT * 8.0;
-            }
-            else {
+            } else {
                 const subT = (t - 0.85) / 0.15;
                 pos.copy(camera.position).addScaledVector(forward, 1030 + subT * 500).addScaledVector(new THREE.Vector3(0,1,0), 50);
-                look.copy(pos).add(forward);
-                snowIntensity = 10.0 + subT * 80.0;
+                look.copy(pos).add(forward); snowIntensity = 10.0 + subT * 80.0;
                 document.getElementById('whiteout').style.opacity = subT;
                 if (subT > 0.95 && !finalMessageShown) {
-                    finalMessageShown = true;
-                    document.getElementById('final-screen').style.opacity = 1;
-                    // FINISH GAME: Return control and stop loop
-                    setTimeout(() => {
-                        document.exitPointerLock();
-                        document.getElementById('header-bar').style.display = 'none';
-                        document.getElementById('crosshair').style.display = 'none';
-                        document.getElementById('bag-display').style.display = 'none';
-                        gameOver = true;
-                    }, 4000);
+                    finalMessageShown = true; document.getElementById('final-screen').style.opacity = 1;
+                    setTimeout(() => { if (document.pointerLockElement) document.exitPointerLock(); document.getElementById('header-bar').style.display = 'none'; document.getElementById('crosshair').style.display = 'none'; document.getElementById('bag-display').style.display = 'none'; gameOver = true; }, 4000);
                 }
             }
             finalSleighGroup.position.copy(pos); finalSleighGroup.lookAt(look);
@@ -598,11 +639,11 @@ function animate() {
             if (finalSleighGroup.userData.halo1) finalSleighGroup.userData.halo1.rotation.z += delta * 8;
         }
     }
+
     if (camera.position.y < 12) camera.position.y = 12;
     const snowArr = scene.snow.geometry.attributes.position.array;
     for(let i=1; i<snowArr.length; i+=3) {
-        snowArr[i] -= (0.4 + snowIntensity); 
-        snowArr[i-1] += Math.sin(now*0.001+i)*0.2;
+        snowArr[i] -= (0.4 + snowIntensity); snowArr[i-1] += Math.sin(now*0.001+i)*0.2;
         if(snowArr[i] < -100) snowArr[i] = 800;
     }
     scene.snow.geometry.attributes.position.needsUpdate = true;
